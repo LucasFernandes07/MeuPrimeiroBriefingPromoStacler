@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrinho de Compras Customizável</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Estilos básicos */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 80%;
+      margin: 20px auto;
+    }
+
+    .product-list, .cart-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .product-card, .cart-card {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: 200px;
+      text-align: center;
+    }
+
+    .product-card img, .cart-card img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+
+    .product-card h3, .cart-card h3 {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .product-card p, .cart-card p {
+      font-size: 16px;
+      color: #333;
+    }
+
+    .product-card button, .cart-card button {
+      background-color: #ff00c8;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .cart-list {
+      margin-top: 40px;
+    }
+
+    .cart-summary {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .cart-summary h2 {
+      margin-bottom: 20px;
+    }
+
+    .cart-summary p {
+      font-size: 18px;
+      color: #333;
+    }
+
+    .cart-summary button {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .cart-card button.remove-btn {
+      background-color: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <h1>Produtos Disponíveis</h1>
+    <div class="product-list">
+      <div class="product-card" id="product1">
+        <img src="images/aifom.webp" alt="Produto 1">
+        <h3>iPhone XR 128 GB</h3>
+        <p>R$1.760,00</p>
+        <button onclick="addToCart('product1', 'iPhone XR 128 GB', 1760)">Adicionar ao Carrinho</button>
+      </div>
+
+      <div class="product-card" id="product2">
+        <img src="images/dinossauro.webp" alt="Produto 2">
+        <h3>Macacão Bebê</h3>
+        <p>R$16,90</p>
+        <button onclick="addToCart('product2', 'Macacão Bebê', 16.90)">Adicionar ao Carrinho</button>
+      </div>
+
+      <div class="product-card" id="product3">
+        <img src="images/panela.webp" alt="Produto 3">
+        <h3>Jogo de Panelas</h3>
+        <p>R$173,90</p>
+        <button onclick="addToCart('product3', 'Jogo de Panelas', 173.90)">Adicionar ao Carrinho</button>
+      </div>
+    </div>
+
+    <h1>Carrinho de Compras</h1>
+    <div class="cart-list" id="cart-list"></div>
+
+    <div class="cart-summary" id="cart-summary">
+      <h2>Total</h2>
+      <p id="cart-total">R$0,00</p>
+      <button onclick="checkout()">Finalizar Compra</button>
+    </div>
+
+  </div>
+
+  <script>
+    // Array para armazenar itens do carrinho
+    let cart = [];
+
+    // Função para adicionar produtos ao carrinho
+    function addToCart(productId, productName, productPrice) {
+      const productIndex = cart.findIndex(item => item.id === productId);
+
+      if (productIndex === -1) {
+        // Produto não existe no carrinho, adicionar novo item
+        const product = {
+          id: productId,
+          name: productName,
+          price: productPrice,
+          quantity: 1
+        };
+        cart.push(product);
+      } else {
+        // Produto já existe, aumentar a quantidade
+        cart[productIndex].quantity += 1;
+      }
+      updateCartDisplay();
+    }
+
+    // Função para remover um produto do carrinho
+    function removeFromCart(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      updateCartDisplay();
+    }
+
+    // Função para atualizar a exibição do carrinho
+    function updateCartDisplay() {
+      const cartList = document.getElementById('cart-list');
+      const cartTotal = document.getElementById('cart-total');
+      cartList.innerHTML = '';
+
+      let total = 0;
+      cart.forEach(item => {
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-card');
+        cartItem.innerHTML = `
+          <h3>${item.name}</h3>
+          <p>R$${item.price.toFixed(2)}</p>
+          <p>Quantidade: <span id="quantity-${item.id}">${item.quantity}</span></p>
+          <button onclick="updateQuantity('${item.id}', 1)">+</button>
+          <button onclick="updateQuantity('${item.id}', -1)">-</button>
+          <button class="remove-btn" onclick="removeFromCart('${item.id}')">Remover</button>
+        `;
+        cartList.appendChild(cartItem);
+        total += item.price * item.quantity;
+      });
+
+      cartTotal.textContent = `R$${total.toFixed(2)}`;
+    }
+
+    // Função para atualizar a quantidade de um item no carrinho
+    function updateQuantity(productId, change) {
+      const product = cart.find(item => item.id === productId);
+      if (product) {
+        product.quantity += change;
+        if (product.quantity <= 0) {
+          removeFromCart(productId);
+        } else {
+          updateCartDisplay();
+        }
+      }
+    }
+
+    // Função para finalizar a compra
+    function checkout() {
+      if (cart.length > 0) {
+        alert('Compra finalizada com sucesso!');
+        cart = [];
+        updateCartDisplay();
+      } else {
+        alert('Carrinho vazio! Adicione produtos antes de finalizar a compra.');
+      }
+    }
+  </script>
+
+</body>
+</html>

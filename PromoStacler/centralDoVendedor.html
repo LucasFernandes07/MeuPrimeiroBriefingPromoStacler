@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromoStacler - Torne-se um Vendedor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #ff00c8;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        p {
+            line-height: 1.6;
+        }
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff00c8;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #ff00c8;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+        #success-message {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>PromoStacler</h1>
+    <p>Junte-se a nós e comece sua jornada de sucesso como vendedor!</p>
+</header>
+
+<main>
+    <h2>Por que ser vendedor na PromoStacler?</h2>
+    <ul>
+        <li><strong>Altas Comissões:</strong> Ganhe mais a cada venda.</li>
+        <li><strong>Treinamentos Gratuitos:</strong> Damos suporte total para o seu sucesso.</li>
+        <li><strong>Flexibilidade:</strong> Trabalhe no seu ritmo e de onde quiser.</li>
+    </ul>
+
+    <h2>Como funciona?</h2>
+    <ol>
+        <li>Preencha o formulário com suas informações pessoais e de contato.</li>
+        <li>Conte-nos sobre sua experiência em vendas (se houver).</li>
+        <li>Aguarde nosso e-mail com os próximos passos.</li>
+    </ol>
+
+    <a href="#formulario" class="button">Quero ser Vendedor</a>
+
+    <form id="formulario" style="margin-top: 30px;" onsubmit="return enviarFormulario(event)">
+        <h2>Inscreva-se agora!</h2>
+        <label for="nome">Nome Completo:</label><br>
+        <input type="text" id="nome" name="nome" required style="width: 100%; padding: 10px; margin: 10px 0;"><br>
+        
+        <label for="email">E-mail:</label><br>
+        <input type="email" id="email" name="email" required style="width: 100%; padding: 10px; margin: 10px 0;"><br>
+        
+        <label for="telefone">Telefone:</label><br>
+        <input type="tel" id="telefone" name="telefone" required style="width: 100%; padding: 10px; margin: 10px 0;"><br>
+        
+        <label for="experiencia">Experiência em Vendas:</label><br>
+        <textarea id="experiencia" name="experiencia" rows="4" style="width: 100%; padding: 10px; margin: 10px 0;"></textarea><br>
+        
+        <button type="submit" class="button">Enviar Inscrição</button>
+    </form>
+
+    <div id="success-message">
+        Sua inscrição foi enviada com sucesso! Entraremos em contato em breve.
+    </div>
+</main>
+
+<footer>
+    <p>PromoStacler &copy; 2024 | Todos os direitos reservados.</p>
+</footer>
+
+<script>
+    function enviarFormulario(event) {
+        event.preventDefault(); // Impede o envio real do formulário
+        document.getElementById('formulario').reset(); // Limpa o formulário
+        document.getElementById('success-message').style.display = 'block'; // Exibe a mensagem de sucesso
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // Rola para o topo da página
+        return false; // Garante que a página não será recarregada
+    }
+</script>
+
+</body>
+</html>
