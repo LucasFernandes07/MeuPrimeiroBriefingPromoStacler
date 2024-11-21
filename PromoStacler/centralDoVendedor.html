@@ -114,10 +114,23 @@
         event.preventDefault(); // Impede o envio real do formulário
         document.getElementById('formulario').reset(); // Limpa o formulário
         document.getElementById('success-message').style.display = 'block'; // Exibe a mensagem de sucesso
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // Rola para o topo da página
+
+        // Rola para o topo da página
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Redireciona para a página inicial após 10 segundos
+        setTimeout(function() {
+            window.location.href = "index.html"; // Página para a qual será redirecionado
+        }, 10000); // Tempo em milissegundos (10000ms = 10 segundos)
+
         return false; // Garante que a página não será recarregada
     }
 </script>
 
+</script>
+setTimeout(function() {
+    window.location.href = "index.html"; // Redirecionamento após 10 segundos
+}, 10000); // 10000 ms = 10 segundos
+</script>
 </body>
 </html>

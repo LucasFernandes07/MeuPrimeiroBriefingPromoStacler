@@ -85,7 +85,6 @@
         </form>
     </div>
     <script>
-
       document.addEventListener("DOMContentLoaded", () => {
         const savedUsername = localStorage.getItem("username");
         const savedPassword = localStorage.getItem("password");
@@ -93,16 +92,17 @@
         if (savedPassword) document.getElementById("password").value = savedPassword;
       });
 
-      
       document.getElementById("loginForm").addEventListener("submit", (e) => {
         e.preventDefault(); // Evita recarregar a página
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
+        // Salvar credenciais no localStorage
         localStorage.setItem("username", username);
         localStorage.setItem("password", password);
 
-        alert("Credenciais salvas!");
+        // Redirecionar para a página inicial
+        window.location.href = "index.html"; // A página para onde o usuário será redirecionado
       });
     </script>
   </body>
